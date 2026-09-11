@@ -1,4 +1,3 @@
-import banner from "./assets/mapa_mundi.jpg";
 import Games from "./components/games";
 import TopBar from "./components/top_bar";
 import "./Top_bar.css";
@@ -16,20 +15,16 @@ interface Game {
 interface Props {
   query: string;
   setQuery: React.Dispatch<React.SetStateAction<string>>;
-  data: Game[];
   filteredGames: Game[];
   searchGame: () => void;
-  htmlToText: (html: string) => string;
   changedValue: () => void;
 }
 
 const Home = ({
   query,
   setQuery,
-  data,
   filteredGames,
   searchGame,
-  htmlToText,
   changedValue,
 }: Props) => {
   return (

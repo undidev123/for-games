@@ -1,6 +1,4 @@
 import React, { type ReactNode } from "react";
-import button from "./button";
-import TopBar from "./top_bar";
 import "../index.css";
 interface Props {
   query: string;
@@ -10,11 +8,10 @@ interface Props {
   image: string;
   button: string;
   id: number;
-  searchGame: () => void;
-  changedValue: () => void;
+  changedValue: (value: string) => void;
 }
 
-const Games = ({ title, children, image, button, id }: Props) => {
+const Games = ({ title, children, image, id }: Props) => {
   return (
     <a href={`window.location.href = "/game?id=${id}"`} className="games_a">
       <div className="game-card">
