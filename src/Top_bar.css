@@ -1,0 +1,73 @@
+nav {
+    width: 100%;
+    padding: 1rem 5%;
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    margin-bottom: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #38bdf8;
+    letter-spacing: 1px;
+}
+
+.logo a {
+  text-decoration: none;
+  color: #38bdf8;
+}
+.search {
+  float: right;
+  padding: 6px;
+  border: none;
+  margin-right: 16px;
+  font-size: 17px;
+}
+
+.search_btn {
+    float: none;
+    display: block;
+    text-align: left;
+    margin: 0;
+    padding: 14px;
+}
+/* When the screen is less than 600px wide, stack the links and the search field vertically instead of horizontally */
+@media screen and (max-width: 600px) {
+  .topnav a, .topnav input[type=search] {
+    float: none;
+    display: block;
+    text-align: left;
+    width: 100%;
+    margin: 0;
+    padding: 14px;
+  }
+  .topnav input[type=search] {
+    border: 1px solid #ccc;
+  }
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links li a {
+    position: relative;
+    font-size: 1.05rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: #e2e8f0;
+    margin-left: 30%;
+    transition: 0.3s;
+}
+
+.nav-links li a:hover {
+    color: #38bdf8;
+    text-shadow: 0 0 10px #38bdf8;
+}
