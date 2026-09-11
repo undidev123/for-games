@@ -2,16 +2,43 @@ import { useEffect, useState } from "react";
 import "./index.css";
 import TopBar from "./components/top_bar";
 
+interface GameData {
+  id: number;
+  name: string;
+  background_image: string;
+  released: string;
+  metacritic: number | null;
+  description_raw: string;
+
+  developers: {
+    id: number;
+    name: string;
+  }[];
+
+  ratings: {
+    id: number;
+    title: string;
+    percent: number;
+  }[];
+
+  platforms: {
+    platform: {
+      id: number;
+      name: string;
+    };
+  }[];
+}
+
 interface Props {
   query: string;
   setQuery: React.Dispatch<React.SetStateAction<string>>;
-  searchGame: () => void;
+  searchGame: (value?: string) => void;
   htmlToText: (html: string) => string;
-  changedValue: () => void;
+  changedValue: (value: string) => void;
 }
 
 const Game = ({ query, setQuery, searchGame, changedValue }: Props) => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<GameData | null>(null);
 
   const urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get("id");
@@ -20,7 +47,7 @@ const Game = ({ query, setQuery, searchGame, changedValue }: Props) => {
     if (!id) return;
 
     fetch(
-      `https://api.rawg.io/api/games/${id}?key=14c2af2cd0d944cb83de6bbb922fcdb8`,
+      `https://api.rawg.io/api/games/${id}?key=${import.meta.env.VITE_API_KEY}`,
     )
       .then((response) => response.json())
       .then((data) => {
@@ -42,7 +69,8 @@ const Game = ({ query, setQuery, searchGame, changedValue }: Props) => {
         setQuery={setQuery}
         searchGame={searchGame}
         changedValue={changedValue}
-      ></TopBar>
+      />
+
       <div className="game-page">
         <div className="game-header">
           <img
@@ -53,11 +81,15 @@ const Game = ({ query, setQuery, searchGame, changedValue }: Props) => {
 
           <div className="game-info">
             <h1>{data.name}</h1>
-            <p>Developer: {data.developers[0].name}</p>
+
+            <p>Developer: {data.developers[0]?.name}</p>
+
             <p>
               Score: {data.metacritic ? data.metacritic : "It wasn't rated."}
             </p>
+
             <p>Release date: {data.released}</p>
+
             <div className="ratings">
               {data.ratings.map((rating) => (
                 <p key={rating.id}>
@@ -65,10 +97,12 @@ const Game = ({ query, setQuery, searchGame, changedValue }: Props) => {
                 </p>
               ))}
             </div>
+
             <div className="ratings">
               <p>Plataformas:</p>
+
               {data.platforms.map((platform) => (
-                <p key={platform.id}>{platform.platform.name} </p>
+                <p key={platform.platform.id}>{platform.platform.name}</p>
               ))}
             </div>
           </div>
