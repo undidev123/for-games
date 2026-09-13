@@ -143,10 +143,8 @@ function App() {
         <Home
           query={query}
           setQuery={setQuery}
-          data={data}
           filteredGames={filteredGames}
           searchGame={searchGame}
-          htmlToText={htmlToText}
           changedValue={changedValue}
         />
       ),

@@ -5,17 +5,16 @@ import "./index.css";
 interface Props {
   query: string;
   setQuery: React.Dispatch<React.SetStateAction<string>>;
-  searchGame: () => void;
-  changedValue: () => void;
+  searchGame: (value?: string) => void;
+  changedValue: (value: string) => void;
 }
-const About = ({ query, setQuery, changedValue, searchGame }: Props) => {
+const About = ({ query, setQuery, changedValue }: Props) => {
   return (
     <div>
       <TopBar
         query={query}
         setQuery={setQuery}
         changedValue={changedValue}
-        searchGame={searchGame}
       ></TopBar>
       <p>
         Hello, my name is Gabriel Nunes, and I created this project to hone my

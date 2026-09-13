@@ -10,38 +10,38 @@ interface Game {
   released: string;
   metacritic: number | null;
   description: string;
+
+  developers: {
+    id: number;
+    name: string;
+  }[];
+
+  platforms: {
+    platform: {
+      id: number;
+      name: string;
+    };
+  }[];
 }
 
 interface Props {
   query: string;
   setQuery: React.Dispatch<React.SetStateAction<string>>;
   filteredGames: Game[];
-  searchGame: () => void;
-  changedValue: () => void;
+  searchGame: (value?: string) => void;
+  changedValue: (value: string) => void;
 }
 
-const Home = ({
-  query,
-  setQuery,
-  filteredGames,
-  searchGame,
-  changedValue,
-}: Props) => {
+const Home = ({ query, setQuery, filteredGames, changedValue }: Props) => {
   return (
     <>
-      <TopBar
-        query={query}
-        setQuery={setQuery}
-        searchGame={searchGame}
-        changedValue={changedValue}
-      ></TopBar>
+      <TopBar query={query} setQuery={setQuery} changedValue={changedValue} />
 
       <div className="games-grid">
         {filteredGames.map((game) => (
           <Games
             title={game.name}
             image={game.background_image}
-            button="Informations"
             id={game.id}
             key={game.id}
           >

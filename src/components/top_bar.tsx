@@ -1,22 +1,23 @@
 interface Props {
   query: string;
   setQuery: React.Dispatch<React.SetStateAction<string>>;
-  searchGame: () => void;
-  changedValue: () => void;
+  changedValue: (value: string) => void;
 }
 
-const TopBar = ({ query, setQuery, searchGame, changedValue }: Props) => {
+const TopBar = ({ query, setQuery, changedValue }: Props) => {
   return (
     <nav>
       <div className="logo">
         <a href="../">FORGAMES</a>
       </div>
+
       <ul className="nav-links">
         <li>
           <a href="../">Home</a>
           <a href="../About">About</a>
         </li>
       </ul>
+
       <input
         value={query}
         type="search"

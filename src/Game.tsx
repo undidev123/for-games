@@ -37,7 +37,7 @@ interface Props {
   changedValue: (value: string) => void;
 }
 
-const Game = ({ query, setQuery, searchGame, changedValue }: Props) => {
+const Game = ({ query, setQuery, changedValue }: Props) => {
   const [data, setData] = useState<GameData | null>(null);
 
   const urlParams = new URLSearchParams(window.location.search);
@@ -64,12 +64,7 @@ const Game = ({ query, setQuery, searchGame, changedValue }: Props) => {
 
   return (
     <>
-      <TopBar
-        query={query}
-        setQuery={setQuery}
-        searchGame={searchGame}
-        changedValue={changedValue}
-      />
+      <TopBar query={query} setQuery={setQuery} changedValue={changedValue} />
 
       <div className="game-page">
         <div className="game-header">
