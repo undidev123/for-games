@@ -30,8 +30,6 @@ interface GameData {
 const urlParams = new URLSearchParams(window.location.search);
 const search_info = urlParams.get("search");
 
-const API_KEY = import.meta.env.VITE_API_KEY;
-
 function htmlToText(html: string) {
   const div = document.createElement("div");
   div.innerHTML = html || "";
@@ -44,28 +42,14 @@ function App() {
   const [query, setQuery] = useState<string>("");
 
   useEffect(() => {
-    fetch(`https://api.rawg.io/api/games?key=${API_KEY}&page_size=100`)
+    fetch("/api/games")
       .then((res) => res.json())
-      .then(async (data) => {
-        const games = await Promise.all(
-          data.results.map(async (game: GameData) => {
-            const res = await fetch(
-              `https://api.rawg.io/api/games/${game.id}?key=${API_KEY}`,
-            );
-
-            const details = await res.json();
-
-            return {
-              ...game,
-              description: details.description,
-              developers: details.developers,
-              platforms: details.platforms,
-            };
-          }),
-        );
-
-        setData(games);
-        setOriginalData(games);
+      .then((data) => {
+        setData(data.results);
+        setOriginalData(data.results);
+      })
+      .catch((error) => {
+        console.error(error);
       });
   }, []);
 
@@ -74,30 +58,11 @@ function App() {
   );
 
   async function searchGame(value = query) {
-    const res = await fetch(
-      `https://api.rawg.io/api/games?key=${API_KEY}&search=${value}&page_size=20`,
-    );
+    const res = await fetch(`/api/games?search=${encodeURIComponent(value)}`);
 
     const data = await res.json();
 
-    const games = await Promise.all(
-      data.results.map(async (game: GameData) => {
-        const res = await fetch(
-          `https://api.rawg.io/api/games/${game.id}?key=${API_KEY}`,
-        );
-
-        const details = await res.json();
-
-        return {
-          ...game,
-          description: details.description,
-          developers: details.developers,
-          platforms: details.platforms,
-        };
-      }),
-    );
-
-    setData(games);
+    setData(data.results);
   }
 
   function changedValue(value: string) {
